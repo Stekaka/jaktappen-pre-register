@@ -594,45 +594,42 @@ body::before {
 
 @media (max-width: 480px) {
     .container {
-        padding: 15px 12px;
-        max-height: 100vh;
+        padding: 25px 18px;
+        min-height: 100vh;
     }
     
     .main-content {
-        gap: 20px;
+        gap: 35px;
     }
     
     .app-title {
-        font-size: 2rem;
+        font-size: 2.5rem;
         line-height: 1.1;
-        margin-bottom: 8px;
+        margin-bottom: 12px;
     }
     
     .app-tagline {
-        font-size: 1rem;
-        margin-bottom: 15px;
+        font-size: 1.1rem;
+        margin-bottom: 25px;
+        line-height: 1.3;
     }
     
     .left-content {
-        gap: 18px;
+        gap: 30px;
     }
     
     .phones-showcase {
-        height: 350px;
-    }
-    
-    .signup-form {
-        gap: 10px;
+        height: 450px;
     }
     
     .phone-large {
-        width: 160px;
-        height: 320px;
+        width: 180px;
+        height: 360px;
     }
     
     .phone-central {
-        margin-left: -80px;
-        margin-top: -160px;
+        margin-left: -90px;
+        margin-top: -180px;
     }
     
     .signup-form {
@@ -640,15 +637,17 @@ body::before {
     }
     
     .signup-form input {
-        padding: 14px 18px;
+        padding: 16px 20px;
+        font-size: 16px;
     }
     
     .signup-form button {
-        padding: 14px 22px;
+        padding: 16px 24px;
+        font-size: 1rem;
     }
     
     .success-message {
-        font-size: 0.85rem;
+        font-size: 0.95rem;
     }
 }
 
