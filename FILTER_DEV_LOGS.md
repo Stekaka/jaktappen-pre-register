@@ -76,25 +76,34 @@ I Vercel Logs sökfältet, använd:
 
 **Filtrera BORT dina IPs:**
 ```
-PAGE VIEW -123.45.67.89 -98.76.54.32
+PAGE VIEW -94.191.136.214 -94.234.70.246
 ```
 
 **Eller filtrera på JSON:**
 ```
-"ip": "123.45.67.89"
+"ip": "94.191.136.214"
 ```
 
-### 3. Lägg till dina IPs som kända dev IPs (valfritt)
+**OBS:** Mobil IP kan ändras om du byter nätverk (WiFi vs mobil data). Kontrollera loggarna regelbundet för att se om din mobil IP har ändrats.
+
+### 3. Lägg till dina IPs som kända dev IPs (rekommenderat)
 
 För att automatiskt markera dina IPs som dev i framtida besök:
 
 1. Gå till Vercel Dashboard → ditt projekt → Settings → Environment Variables
 2. Lägg till en ny variabel:
    - **Name:** `DEV_IPS`
-   - **Value:** `123.45.67.89,98.76.54.32` (komma-separerade IPs)
+   - **Value:** `94.191.136.214,94.234.70.246` (komma-separerade IPs)
+   - **Environment:** Production, Preview, Development (välj alla)
 3. Redeploy projektet
 
 Nu markeras alla besök från dessa IPs automatiskt som dev, även utan `?dev=true`.
+
+**Viktigt om mobil IP:**
+- Om du använder WiFi kommer mobilen ofta ha samma IP som din router (94.191.136.214)
+- Om du använder mobil data kommer IP:n att vara från din operatör (94.234.70.246)
+- Mobil data IP kan ändras när du byter plats eller nätverk
+- Om din mobil IP ändras, uppdatera `DEV_IPS` miljövariabeln med den nya IP:n
 
 ## Hur det fungerar
 

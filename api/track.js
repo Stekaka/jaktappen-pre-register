@@ -20,8 +20,10 @@ module.exports = async (req, res) => {
     const urlParams = new URL(req.url, `http://${req.headers.host}`);
     const isDevQuery = urlParams.searchParams.get('dev') === 'true';
     
-    // Lista med kända dev IP-adresser (lägg till dina IPs här)
-    // Du kan också sätta miljövariabeln DEV_IPS i Vercel Dashboard
+    // Lista med kända dev IP-adresser
+    // Sätt miljövariabeln DEV_IPS i Vercel Dashboard med komma-separerade IPs
+    // Exempel: DEV_IPS=94.191.136.214,94.234.70.246
+    // OBS: Mobil IP kan ändras om du byter nätverk (WiFi vs mobil data)
     const knownDevIPs = process.env.DEV_IPS 
       ? process.env.DEV_IPS.split(',').map(ip => ip.trim())
       : [];
