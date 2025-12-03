@@ -704,19 +704,30 @@ body::before {
 }
 
 @media (max-width: 480px) {
+    body {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    
     .container {
-        padding: 12px 10px;
-        min-height: 100vh;
-        max-height: 100vh;
-        overflow: hidden;
+        padding: 8px 10px;
+        min-height: auto;
+        max-height: none;
+        overflow: visible;
+        margin: 0;
     }
     
     .main-content {
-        gap: 15px;
+        gap: 12px;
     }
     
     .left-content {
-        gap: 12px;
+        gap: 10px;
+    }
+    
+    .hero-text {
+        margin-top: 0;
+        padding-top: 0;
     }
     
     .app-logo {
