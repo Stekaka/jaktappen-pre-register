@@ -106,11 +106,24 @@ body::before {
 /* Central Phone (stor) */
 .phone-central {
     z-index: 10;
-    /* Removed perspective transform for better image quality */
     left: 50%;
     top: 50%;
     margin-left: -120px;
     margin-top: -240px;
+}
+
+/* Desktop: Remove ALL perspective transforms for maximum image quality */
+@media (min-width: 769px) {
+    .phone-central {
+        transform: none !important;
+    }
+    
+    .phone-top-right,
+    .phone-bottom-right,
+    .phone-top-right-2,
+    .phone-bottom-right-2 {
+        transform: none !important;
+    }
 }
 
 .phone-large {
