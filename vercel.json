@@ -10,18 +10,6 @@
     {
       "src": "/api/subscribe",
       "dest": "/api/subscribe.js"
-    },
-    {
-      "src": "/public/(.*)",
-      "dest": "/public/$1"
-    },
-    {
-      "src": "/(.*\\.(html|css|js|png|jpg|jpeg|gif|svg|webp|ico|json))",
-      "dest": "/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
     }
   ]
 }
