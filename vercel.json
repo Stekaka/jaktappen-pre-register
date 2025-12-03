@@ -1,15 +1,14 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "api/subscribe.js",
-      "use": "@vercel/node"
+  "functions": {
+    "api/subscribe.js": {
+      "runtime": "nodejs18.x"
     }
-  ],
-  "routes": [
+  },
+  "rewrites": [
     {
-      "src": "/api/subscribe",
-      "dest": "/api/subscribe.js"
+      "source": "/api/subscribe",
+      "destination": "/api/subscribe.js"
     }
   ]
 }
