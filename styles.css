@@ -75,7 +75,7 @@ body::before {
 }
 
 .hero-text {
-    text-align: left;
+    text-align: center;
 }
 
 .phone-section {
@@ -343,6 +343,8 @@ body::before {
     line-height: 1.05;
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
     text-align: center;
+    display: block;
+    width: 100%;
 }
 
 .app-tagline {
