@@ -186,24 +186,38 @@ body::before {
     /* NO image-rendering properties - let browser use default smooth rendering */
 }
 
-/* Desktop: Maximum image quality - use cover with smooth rendering */
+/* Desktop: MAXIMUM image quality - prevent downscaling from transforms */
 @media (min-width: 769px) {
     .phone-content-image {
         object-fit: cover;
         object-position: center;
-        /* Use browser's default smooth rendering - NO crisp-edges or pixelated */
+        /* Force high-quality rendering */
+        image-rendering: -webkit-optimize-contrast;
         image-rendering: auto;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        /* Ensure images render at full quality */
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
+        /* Prevent transforms from affecting image quality */
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        will-change: auto;
+        /* Force GPU layer for better quality */
+        -webkit-backface-visibility: visible;
+        backface-visibility: visible;
     }
     
     .phone-screen {
-        /* Optimize container rendering */
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
+        /* Isolate transforms to container, not image */
+        transform-style: preserve-3d;
+        -webkit-transform-style: preserve-3d;
+        -webkit-backface-visibility: visible;
+        backface-visibility: visible;
+    }
+    
+    .phone-container {
+        /* Force high-quality rendering of transformed elements */
+        transform-style: preserve-3d;
+        -webkit-transform-style: preserve-3d;
+        will-change: transform;
     }
 }
 
