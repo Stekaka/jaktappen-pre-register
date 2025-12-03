@@ -16,6 +16,10 @@ module.exports = async (req, res) => {
     const ip = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || 'Unknown';
     const referer = req.headers['referer'] || 'Direct';
     
+    // Kolla om det är en dev-session (från query parameter)
+    const urlParams = new URL(req.url, `http://${req.headers.host}`);
+    const isDev = urlParams.searchParams.get('dev') === 'true';
+    
     // Logga page view
     const pageViewData = {
       timestamp: timestamp,
@@ -23,10 +27,16 @@ module.exports = async (req, res) => {
       userAgent: userAgent,
       referer: referer,
       url: req.url,
-      method: req.method
+      method: req.method,
+      isDev: isDev
     };
 
-    console.log('👁️ PAGE VIEW:', JSON.stringify(pageViewData, null, 2));
+    // Tydlig markering för dev-sessions
+    if (isDev) {
+      console.log('🔧 [DEV] PAGE VIEW (FILTERA BORT):', JSON.stringify(pageViewData, null, 2));
+    } else {
+      console.log('👁️ PAGE VIEW:', JSON.stringify(pageViewData, null, 2));
+    }
     
     // Returnera success (ingen data behövs)
     res.status(200).json({ 

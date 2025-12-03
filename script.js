@@ -1,7 +1,16 @@
 // Track page view
 async function trackPageView() {
     try {
-        await fetch('/api/track', {
+        // Kolla om det är en dev-session (från query parameter eller localStorage)
+        const urlParams = new URLSearchParams(window.location.search);
+        const isDev = urlParams.get('dev') === 'true' || localStorage.getItem('dev-tracking') === 'true';
+        
+        // Om ?dev=true finns, spara det i localStorage för framtida besök
+        if (urlParams.get('dev') === 'true') {
+            localStorage.setItem('dev-tracking', 'true');
+        }
+        
+        await fetch('/api/track' + (isDev ? '?dev=true' : ''), {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
