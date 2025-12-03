@@ -1,3 +1,26 @@
+// Generate QR Code
+function generateQRCode() {
+    const qrCodeContainer = document.getElementById('qrCode');
+    const url = 'https://jaktappen-pre-register.vercel.app/';
+    
+    // Använd QR Server API (gratis, ingen registrering)
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
+    
+    const img = document.createElement('img');
+    img.src = qrCodeUrl;
+    img.alt = 'QR Code för sidan';
+    img.style.width = '100%';
+    img.style.height = 'auto';
+    img.style.borderRadius = '12px';
+    
+    qrCodeContainer.appendChild(img);
+}
+
+// Initialize QR Code when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    generateQRCode();
+});
+
 document.getElementById('signupForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     

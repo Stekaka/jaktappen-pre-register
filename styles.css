@@ -402,6 +402,39 @@ body::before {
     opacity: 1;
 }
 
+/* QR Code */
+.qr-container {
+    margin-top: 30px;
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    border: 1px solid rgba(90, 156, 58, 0.2);
+}
+
+.qr-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 15px;
+    font-weight: 400;
+}
+
+.qr-code {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.qr-code img {
+    max-width: 180px;
+    height: auto;
+    border-radius: 8px;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .container {

@@ -1,57 +1,53 @@
+// För Vercel: Logga emails till console (syns i Vercel logs)
+// För lokal utveckling: Spara till fil
 const fs = require('fs');
 const path = require('path');
 
-// För Vercel serverless functions
+const isVercel = process.env.VERCEL === '1';
 const DATA_DIR = path.join(process.cwd(), 'data');
 const EMAILS_FILE = path.join(DATA_DIR, 'emails.json');
 
-// Skapa data-mappen om den inte finns (för lokal utveckling)
-if (!fs.existsSync(DATA_DIR)) {
-  try {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-  } catch (e) {
-    // Ignorera om det inte går (t.ex. på Vercel)
-  }
-}
-
-// Skapa emails.json om den inte finns
-if (!fs.existsSync(EMAILS_FILE)) {
-  try {
-    fs.writeFileSync(EMAILS_FILE, JSON.stringify([], null, 2));
-  } catch (e) {
-    // Ignorera om det inte går
-  }
-}
-
 // Funktion för att spara e-postadress
 function saveEmail(email) {
+  const emailData = {
+    email: email,
+    timestamp: new Date().toISOString(),
+    source: 'jaktappen-pre-register'
+  };
+
+  // På Vercel: Logga till console (syns i Vercel Dashboard → Functions → Logs)
+  if (isVercel) {
+    console.log('📧 NEW EMAIL SUBSCRIPTION:', JSON.stringify(emailData, null, 2));
+    // Du kan se dessa i Vercel Dashboard → Your Project → Functions → subscribe → Logs
+    return true;
+  }
+
+  // Lokal utveckling: Spara till fil
   try {
-    if (!fs.existsSync(EMAILS_FILE)) {
-      fs.writeFileSync(EMAILS_FILE, JSON.stringify([], null, 2));
+    if (!fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(DATA_DIR, { recursive: true });
     }
     
-    const data = fs.readFileSync(EMAILS_FILE, 'utf8');
-    const emails = JSON.parse(data);
+    let emails = [];
+    if (fs.existsSync(EMAILS_FILE)) {
+      const data = fs.readFileSync(EMAILS_FILE, 'utf8');
+      emails = JSON.parse(data);
+    }
     
     // Kontrollera om e-postadressen redan finns
     const exists = emails.some(e => e.email === email);
     if (!exists) {
-      emails.push({
-        email: email,
-        timestamp: new Date().toISOString()
-      });
+      emails.push(emailData);
       fs.writeFileSync(EMAILS_FILE, JSON.stringify(emails, null, 2));
-      console.log(`Email saved: ${email}`);
+      console.log(`✅ Email saved locally: ${email}`);
       return true;
     } else {
-      console.log(`Email already exists: ${email}`);
+      console.log(`⚠️ Email already exists: ${email}`);
       return false;
     }
   } catch (error) {
-    console.error('Error saving email:', error);
-    // På Vercel kan vi inte skriva till filsystem, så vi returnerar true ändå
-    // I produktion skulle du använda en databas istället
-    return true;
+    console.error('❌ Error saving email:', error);
+    return true; // Returnera true så användaren får bekräftelse ändå
   }
 }
 
