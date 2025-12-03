@@ -271,7 +271,7 @@ body::before {
 }
 
 .phone-bottom-right-2 .phone-screen {
-    border-radius: 28px;
+    border-radius: 16px;
 }
 
 /* Hero Text */
@@ -723,6 +723,10 @@ body::before {
     .phone-bottom-right-2 .phone {
         width: 100px;
         height: 200px;
+    }
+    
+    .phone-bottom-right-2 .phone-screen {
+        border-radius: 12px;
     }
     
     .signup-form {
