@@ -98,14 +98,9 @@ body::before {
 /* Phone Model */
 .phone-container {
     position: absolute;
-    transition: transform 0.4s ease;
+    /* Removed hover animations to improve image quality */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
-
-.phone-container:hover {
-    transform: scale(1.05) !important;
-    z-index: 10 !important;
 }
 
 /* Central Phone (stor) */
@@ -190,15 +185,19 @@ body::before {
     background: linear-gradient(135deg, #2a2a2a 0%, #3a3a2a 50%, #2a2a2a 100%);
 }
 
-/* Desktop-specific: Better image quality */
+/* Desktop-specific: Maximum image quality - no transforms on images */
 @media (min-width: 769px) {
     .phone-content-image {
         image-rendering: auto;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        /* No transforms on the image itself */
+        transform: none;
+        -webkit-transform: none;
     }
     
     .phone-screen {
+        /* Keep screen transforms but optimize */
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
     }
