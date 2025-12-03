@@ -200,14 +200,10 @@ body::before {
     .phone-content-image {
         object-fit: cover;
         object-position: center;
-        /* Use browser's default smooth rendering - NO optimize-contrast */
+        /* Use browser's default smooth rendering - NO optimize-contrast or crisp-edges */
         image-rendering: auto;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        /* Ensure images render at native resolution */
-        image-rendering: -webkit-optimize-contrast;
-        image-rendering: crisp-edges;
-        image-rendering: auto; /* Override with auto for smooth rendering */
     }
     
     .phone-screen {
