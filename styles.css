@@ -106,7 +106,7 @@ body::before {
 /* Central Phone (stor) */
 .phone-central {
     z-index: 10;
-    transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
+    /* Removed perspective transform for better image quality */
     left: 50%;
     top: 50%;
     margin-left: -120px;
@@ -185,21 +185,16 @@ body::before {
     background: linear-gradient(135deg, #2a2a2a 0%, #3a3a2a 50%, #2a2a2a 100%);
 }
 
-/* Desktop-specific: Maximum image quality - no transforms on images */
+/* Desktop: Ensure images render at full quality */
 @media (min-width: 769px) {
     .phone-content-image {
         image-rendering: auto;
         -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        /* No transforms on the image itself */
-        transform: none;
-        -webkit-transform: none;
     }
     
     .phone-screen {
-        /* Keep screen transforms but optimize */
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
+        transform: none;
+        -webkit-transform: none;
     }
 }
 
