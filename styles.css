@@ -172,10 +172,6 @@ body::before {
     border-radius: 20px;
     overflow: hidden;
     position: relative;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-perspective: 1000px;
-    perspective: 1000px;
     border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
@@ -190,18 +186,6 @@ body::before {
     object-position: center;
     display: block;
     background: linear-gradient(135deg, #2a2a2a 0%, #3a3a2a 50%, #2a2a2a 100%);
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: optimize-contrast;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    transform: translateZ(0) scale(1);
-    will-change: transform;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-transform: translate3d(0, 0, 0) scale(1);
-    transform: translate3d(0, 0, 0) scale(1);
-    min-width: 100%;
-    min-height: 100%;
 }
 
 .phone-content-image:not([src]),
