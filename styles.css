@@ -172,6 +172,8 @@ body::before {
     position: relative;
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
 }
 
 .phone-small .phone-screen {
@@ -186,12 +188,15 @@ body::before {
     display: block;
     background: linear-gradient(135deg, #2a2a2a 0%, #3a3a2a 50%, #2a2a2a 100%);
     image-rendering: -webkit-optimize-contrast;
-    image-rendering: auto;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     transform: translateZ(0);
     will-change: transform;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    filter: contrast(1.05) brightness(1.02);
 }
 
 .phone-content-image:not([src]),
