@@ -1,0 +1,10 @@
+# Data files
+data/emails.json
+
+# Node modules (if you add any)
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+

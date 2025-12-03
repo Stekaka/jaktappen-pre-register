@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-Register</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="main-content">
+            <!-- Left Side: Text and Form -->
+            <div class="left-content">
+                <div class="hero-text">
+                    <h1 class="app-title">JAKTAPPEN</h1>
+                    <p class="app-tagline">Appen för jägare och jaktlag</p>
+                </div>
+                
+                <div class="form-container">
+                    <form class="signup-form" id="signupForm">
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            placeholder="Din e-postadress" 
+                            required
+                        >
+                        <button type="submit">Registrera</button>
+                    </form>
+                    <p class="success-message" id="successMessage"></p>
+                </div>
+            </div>
+            
+            <!-- Right Side: Phones -->
+            <div class="phone-section">
+                <div class="phones-showcase">
+                    <!-- Central Phone (stor) - App1.PNG som main -->
+                    <div class="phone-container phone-central">
+                        <div class="phone phone-large">
+                            <div class="phone-screen">
+                                <img id="phoneImage" src="public/images/App1.PNG" alt="App content" class="phone-content-image">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Surrounding Phones -->
+                    <!-- Top Right Phone - App2 -->
+                    <div class="phone-container phone-top-right">
+                        <div class="phone phone-small">
+                            <div class="phone-screen">
+                                <img id="phoneImage1" src="public/images/App2.PNG" alt="App screen 1" class="phone-content-image">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Bottom Right Phone - App3 -->
+                    <div class="phone-container phone-bottom-right">
+                        <div class="phone phone-small">
+                            <div class="phone-screen">
+                                <img id="phoneImage2" src="public/images/App3.PNG" alt="App screen 2" class="phone-content-image">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Top Right Phone 2 - App4 -->
+                    <div class="phone-container phone-top-right-2">
+                        <div class="phone phone-small">
+                            <div class="phone-screen">
+                                <img id="phoneImage3" src="public/images/App4.PNG" alt="App screen 3" class="phone-content-image">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Bottom Right Phone 2 - App5 -->
+                    <div class="phone-container phone-bottom-right-2">
+                        <div class="phone phone-small">
+                            <div class="phone-screen">
+                                <img id="phoneImage4" src="public/images/App5.PNG" alt="App screen 4" class="phone-content-image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
+
