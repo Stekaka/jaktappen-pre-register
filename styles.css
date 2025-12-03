@@ -183,33 +183,27 @@ body::before {
     object-position: center;
     display: block;
     background: linear-gradient(135deg, #2a2a2a 0%, #3a3a2a 50%, #2a2a2a 100%);
-    /* Force high quality rendering */
-    image-rendering: -webkit-optimize-contrast;
-    -ms-interpolation-mode: bicubic;
-    image-rendering: crisp-edges;
+    /* NO image-rendering properties - let browser use default smooth rendering */
 }
 
-/* Desktop: Maximum image quality - use contain to prevent scaling artifacts */
+/* Desktop: Maximum image quality - use cover with smooth rendering */
 @media (min-width: 769px) {
     .phone-content-image {
-        object-fit: contain;
+        object-fit: cover;
+        object-position: center;
+        /* Use browser's default smooth rendering - NO crisp-edges or pixelated */
         image-rendering: auto;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        /* Prevent any scaling that causes pixelation */
-        min-width: 100%;
-        min-height: 100%;
-        width: auto;
-        height: auto;
-        max-width: none;
-        max-height: none;
+        /* Ensure images render at full quality */
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
     }
     
     .phone-screen {
-        /* Keep transforms but optimize rendering */
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
-        will-change: transform;
+        /* Optimize container rendering */
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
     }
 }
 
