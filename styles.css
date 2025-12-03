@@ -186,6 +186,16 @@ body::before {
     object-position: center;
     display: block;
     background: linear-gradient(135deg, #2a2a2a 0%, #3a3a2a 50%, #2a2a2a 100%);
+    image-rendering: -webkit-optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+}
+
+/* Desktop-specific: Better image quality */
+@media (min-width: 769px) {
+    .phone-content-image {
+        image-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+    }
 }
 
 .phone-content-image:not([src]),
