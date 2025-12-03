@@ -28,10 +28,32 @@ module.exports = async (req, res) => {
       ? process.env.DEV_IPS.split(',').map(ip => ip.trim())
       : [];
     
+    // Identifiera automatiska bots och Vercel-tjänster som ska filtreras bort
+    const isBot = userAgent.toLowerCase().includes('vercel-screenshot') ||
+                  userAgent.toLowerCase().includes('bot') ||
+                  userAgent.toLowerCase().includes('crawler') ||
+                  userAgent.toLowerCase().includes('spider') ||
+                  userAgent.toLowerCase().includes('headless') ||
+                  userAgent.toLowerCase().includes('monitoring') ||
+                  userAgent.toLowerCase().includes('uptime') ||
+                  userAgent.toLowerCase().includes('pingdom') ||
+                  userAgent.toLowerCase().includes('status') ||
+                  userAgent.toLowerCase().includes('health');
+    
     // Extrahera första IP från x-forwarded-for (kan vara flera)
     const clientIP = ip.split(',')[0].trim();
     const isKnownDevIP = knownDevIPs.includes(clientIP);
-    const isDev = isDevQuery || isKnownDevIP;
+    const isDev = isDevQuery || isKnownDevIP || isBot;
+    
+    // Bestäm anledning för dev-markering
+    let devReason = null;
+    if (isBot) {
+      devReason = 'bot';
+    } else if (isDevQuery) {
+      devReason = 'query-param';
+    } else if (isKnownDevIP) {
+      devReason = 'known-ip';
+    }
     
     // Logga page view
     const pageViewData = {
@@ -42,15 +64,16 @@ module.exports = async (req, res) => {
       url: req.url,
       method: req.method,
       isDev: isDev,
-      devReason: isDevQuery ? 'query-param' : (isKnownDevIP ? 'known-ip' : null)
+      devReason: devReason
     };
 
-    // Tydlig markering för dev-sessions
+    // Tydlig markering för dev-sessions och bots
     if (isDev) {
-      const reason = isDevQuery ? 'query-param' : 'known-ip';
-      console.log(`🔧 [DEV] PAGE VIEW (FILTERA BORT) [${reason}]:`, JSON.stringify(pageViewData, null, 2));
+      const emoji = isBot ? '🤖' : '🔧';
+      const label = isBot ? 'BOT (FILTERA BORT)' : 'DEV (FILTERA BORT)';
+      console.log(`${emoji} [${label}] [${devReason}]:`, JSON.stringify(pageViewData, null, 2));
     } else {
-      console.log('👁️ PAGE VIEW:', JSON.stringify(pageViewData, null, 2));
+      console.log('👁️ PAGE VIEW (RIKTIG BESÖKARE):', JSON.stringify(pageViewData, null, 2));
     }
     
     // Returnera success (ingen data behövs)

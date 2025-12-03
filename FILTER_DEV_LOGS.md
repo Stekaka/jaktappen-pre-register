@@ -1,8 +1,11 @@
-# Filtrera bort dina egna page views i Vercel Logs
+# Filtrera bort dina egna page views och bots i Vercel Logs
 
 ## Snabbguide
 
-För att markera dina egna besök och kunna filtrera bort dem:
+För att enkelt se **RIKTIGA BESÖKARE** och filtrera bort:
+- Dina egna besök (dev-sessions)
+- Vercel screenshot-bots (`vercel-screenshot/1.0`)
+- Andra automatiska bots och crawlers
 
 ### 1. Markera dina enheter
 
@@ -27,21 +30,27 @@ https://jaktappen-pre-register.vercel.app/?dev=true
 
 I Vercel Logs kan du filtrera på flera sätt:
 
-#### Metod 1: Sök efter "PAGE VIEW" (exkludera DEV)
+#### Metod 1: Sök efter "RIKTIG BESÖKARE" (enklast!)
 I sökfältet, skriv:
 ```
-PAGE VIEW -DEV
+RIKTIG BESÖKARE
 ```
 
-Detta visar bara riktiga besökare, inte dina egna.
+Detta visar **ENDAST** riktiga besökare - alla bots och dev-sessions filtreras bort automatiskt!
 
-#### Metod 2: Sök efter "👁️" (exkludera "🔧")
+#### Metod 2: Sök efter "👁️" (exkludera bots och dev)
 I sökfältet, skriv:
 ```
-👁️ -🔧
+👁️ -🤖 -🔧
 ```
 
-#### Metod 3: Filtrera på JSON-fält
+#### Metod 3: Exkludera specifika user-agents
+För att filtrera bort Vercel screenshot och andra bots:
+```
+PAGE VIEW -vercel-screenshot -bot -crawler
+```
+
+#### Metod 4: Filtrera på JSON-fält
 Om Vercel stödjer JSON-filtering, sök efter:
 ```
 "isDev": false
@@ -107,29 +116,65 @@ Nu markeras alla besök från dessa IPs automatiskt som dev, även utan `?dev=tr
 
 ## Hur det fungerar
 
-- När du besöker sidan med `?dev=true` markeras dina page views med `🔧 [DEV] PAGE VIEW (FILTERA BORT):`
-- Riktiga besökare får `👁️ PAGE VIEW:`
-- Dev-sessions har `"isDev": true` i JSON-data
+**Automatiskt filtrerade:**
+- 🤖 **Bots** (inkl. `vercel-screenshot/1.0`) - markeras med `🤖 [BOT (FILTERA BORT)]`
+- 🔧 **Dev-sessions** - dina egna besök med `?dev=true` eller kända IPs
+- Alla har `"isDev": true` i JSON-data
+
+**Riktiga besökare:**
+- 👁️ **Riktiga besökare** - markeras med `👁️ PAGE VIEW (RIKTIG BESÖKARE):`
+- Har `"isDev": false` i JSON-data
+
+**Automatisk bot-detektering:**
+Systemet identifierar automatiskt:
+- `vercel-screenshot` (Vercel's screenshot-tjänst)
+- `bot`, `crawler`, `spider` (sökmotorer och crawlers)
+- `headless`, `monitoring`, `uptime`, `pingdom` (monitoring-tjänster)
+
+**Dev-markering:**
+- När du besöker sidan med `?dev=true` markeras dina page views
 - Markeringen sparas i localStorage så du behöver inte lägga till `?dev=true` varje gång
 - Om du sätter `DEV_IPS` miljövariabeln markeras dessa IPs automatiskt som dev
 
 ## Exempel på loggar
 
-**Dina egna besök (filtrera bort):**
+**Vercel screenshot bot (filtrera bort):**
 ```
-🔧 [DEV] PAGE VIEW (FILTERA BORT): {
+🤖 [BOT (FILTERA BORT)] [bot]: {
   "timestamp": "2024-12-04T...",
-  "ip": "...",
-  "isDev": true
+  "userAgent": "vercel-screenshot/1.0",
+  "isDev": true,
+  "devReason": "bot"
 }
 ```
 
-**Riktiga besökare:**
+**Dina egna besök (filtrera bort):**
 ```
-👁️ PAGE VIEW: {
+🔧 [DEV (FILTERA BORT)] [query-param]: {
   "timestamp": "2024-12-04T...",
-  "ip": "...",
-  "isDev": false
+  "ip": "94.191.136.214",
+  "isDev": true,
+  "devReason": "query-param"
 }
 ```
+
+**Riktiga besökare (detta vill du se!):**
+```
+👁️ PAGE VIEW (RIKTIG BESÖKARE): {
+  "timestamp": "2024-12-04T...",
+  "ip": "123.45.67.89",
+  "userAgent": "Mozilla/5.0...",
+  "isDev": false,
+  "devReason": null
+}
+```
+
+## Snabbguide för att se RIKTIGA BESÖKARE
+
+**I Vercel Logs, sök efter:**
+```
+RIKTIG BESÖKARE
+```
+
+Detta visar **ENDAST** riktiga besökare - alla bots, dev-sessions och automatiska besök filtreras bort!
 
