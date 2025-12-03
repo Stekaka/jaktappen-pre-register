@@ -422,6 +422,13 @@ body::before {
     display: block;
 }
 
+/* Dölj QR-kod på mobil */
+@media (max-width: 768px) {
+    .qr-code {
+        display: none;
+    }
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .container {
@@ -499,46 +506,61 @@ body::before {
 
 @media (max-width: 768px) {
     .container {
-        padding: 20px 15px;
-        min-height: auto;
-        max-height: 100vh;
+        padding: 30px 20px;
+        min-height: 100vh;
+        max-height: none;
+        overflow-y: auto;
     }
     
     .main-content {
-        gap: 25px;
-    }
-    
-    .app-title {
-        font-size: 2.5rem;
-        margin-bottom: 10px;
-    }
-    
-    .app-tagline {
-        font-size: 1.1rem;
-        margin-bottom: 20px;
+        gap: 40px;
+        grid-template-columns: 1fr;
     }
     
     .left-content {
-        gap: 20px;
+        gap: 35px;
+        order: 1;
+        text-align: center;
+    }
+    
+    .phone-section {
+        order: 2;
+    }
+    
+    .hero-text {
+        text-align: center;
+    }
+    
+    .app-title {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        line-height: 1.1;
+    }
+    
+    .app-tagline {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        line-height: 1.4;
+    }
+    
+    .form-container {
+        max-width: 100%;
+        text-align: center;
     }
     
     .phones-showcase {
-        height: 400px;
+        height: 500px;
+        justify-content: center;
     }
     
     .phone-large {
-        width: 180px;
-        height: 360px;
-    }
-    
-    .phone-small {
-        width: 110px;
-        height: 220px;
+        width: 200px;
+        height: 400px;
     }
     
     .phone-central {
-        margin-left: -90px;
-        margin-top: -180px;
+        margin-left: -100px;
+        margin-top: -200px;
     }
     
     .phone-top-right,
@@ -548,18 +570,25 @@ body::before {
         display: none; /* Dölj små telefoner på mobil */
     }
     
-    .form-container {
-        max-width: 100%;
+    .signup-form {
+        gap: 15px;
     }
     
     .signup-form input {
-        padding: 16px 20px;
+        padding: 18px 22px;
         font-size: 16px; /* Förhindra zoom på iOS */
+        border-radius: 14px;
     }
     
     .signup-form button {
-        padding: 16px 24px;
-        font-size: 1rem;
+        padding: 18px 28px;
+        font-size: 1.05rem;
+        border-radius: 14px;
+    }
+    
+    .success-message {
+        font-size: 0.95rem;
+        margin-top: 15px;
     }
 }
 
