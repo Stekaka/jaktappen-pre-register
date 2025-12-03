@@ -1,3 +1,18 @@
+// Track page view
+async function trackPageView() {
+    try {
+        await fetch('/api/track', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+    } catch (error) {
+        // Ignorera fel - tracking ska inte störa användaren
+        console.log('Tracking failed (non-critical):', error);
+    }
+}
+
 // Generate QR Code
 function generateQRCode() {
     const qrCodeContainer = document.getElementById('qrCode');
@@ -13,9 +28,10 @@ function generateQRCode() {
     qrCodeContainer.appendChild(img);
 }
 
-// Initialize QR Code when page loads
+// Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
     generateQRCode();
+    trackPageView(); // Track page view
 });
 
 document.getElementById('signupForm').addEventListener('submit', async function(e) {
