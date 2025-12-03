@@ -78,6 +78,14 @@ body::before {
     text-align: center;
 }
 
+/* Desktop: Keep form left-aligned */
+@media (min-width: 769px) {
+    .form-container {
+        text-align: left;
+        margin-left: 0;
+    }
+}
+
 .phone-section {
     position: relative;
     width: 100%;
