@@ -18,22 +18,35 @@ module.exports = async (req, res) => {
     
     // Kolla om det är en dev-session (från query parameter)
     const urlParams = new URL(req.url, `http://${req.headers.host}`);
-    const isDev = urlParams.searchParams.get('dev') === 'true';
+    const isDevQuery = urlParams.searchParams.get('dev') === 'true';
+    
+    // Lista med kända dev IP-adresser (lägg till dina IPs här)
+    // Du kan också sätta miljövariabeln DEV_IPS i Vercel Dashboard
+    const knownDevIPs = process.env.DEV_IPS 
+      ? process.env.DEV_IPS.split(',').map(ip => ip.trim())
+      : [];
+    
+    // Extrahera första IP från x-forwarded-for (kan vara flera)
+    const clientIP = ip.split(',')[0].trim();
+    const isKnownDevIP = knownDevIPs.includes(clientIP);
+    const isDev = isDevQuery || isKnownDevIP;
     
     // Logga page view
     const pageViewData = {
       timestamp: timestamp,
-      ip: ip,
+      ip: clientIP,
       userAgent: userAgent,
       referer: referer,
       url: req.url,
       method: req.method,
-      isDev: isDev
+      isDev: isDev,
+      devReason: isDevQuery ? 'query-param' : (isKnownDevIP ? 'known-ip' : null)
     };
 
     // Tydlig markering för dev-sessions
     if (isDev) {
-      console.log('🔧 [DEV] PAGE VIEW (FILTERA BORT):', JSON.stringify(pageViewData, null, 2));
+      const reason = isDevQuery ? 'query-param' : 'known-ip';
+      console.log(`🔧 [DEV] PAGE VIEW (FILTERA BORT) [${reason}]:`, JSON.stringify(pageViewData, null, 2));
     } else {
       console.log('👁️ PAGE VIEW:', JSON.stringify(pageViewData, null, 2));
     }

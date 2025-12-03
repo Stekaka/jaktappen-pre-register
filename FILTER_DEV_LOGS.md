@@ -55,12 +55,54 @@ Om du vill återställa så att dina besök inte markeras som dev:
 2. Kör: `localStorage.removeItem('dev-tracking')`
 3. Eller besök sidan utan `?dev=true` i URL:en
 
+## Retroaktiv filtrering på IP-adress
+
+Om du vill filtrera bort dina egna besök retroaktivt (innan dev-tracking implementerades):
+
+### 1. Hitta dina IP-adresser
+
+Dina IP-adresser loggas i varje page view. Hitta dem genom att:
+1. Gå till Vercel Logs
+2. Sök efter dina kända besök (t.ex. när du testade sidan)
+3. Kopiera IP-adresserna från JSON-data
+
+**Exempel:**
+- Desktop IP: `123.45.67.89`
+- Mobil IP: `98.76.54.32`
+
+### 2. Filtrera i Vercel Logs
+
+I Vercel Logs sökfältet, använd:
+
+**Filtrera BORT dina IPs:**
+```
+PAGE VIEW -123.45.67.89 -98.76.54.32
+```
+
+**Eller filtrera på JSON:**
+```
+"ip": "123.45.67.89"
+```
+
+### 3. Lägg till dina IPs som kända dev IPs (valfritt)
+
+För att automatiskt markera dina IPs som dev i framtida besök:
+
+1. Gå till Vercel Dashboard → ditt projekt → Settings → Environment Variables
+2. Lägg till en ny variabel:
+   - **Name:** `DEV_IPS`
+   - **Value:** `123.45.67.89,98.76.54.32` (komma-separerade IPs)
+3. Redeploy projektet
+
+Nu markeras alla besök från dessa IPs automatiskt som dev, även utan `?dev=true`.
+
 ## Hur det fungerar
 
 - När du besöker sidan med `?dev=true` markeras dina page views med `🔧 [DEV] PAGE VIEW (FILTERA BORT):`
 - Riktiga besökare får `👁️ PAGE VIEW:`
 - Dev-sessions har `"isDev": true` i JSON-data
 - Markeringen sparas i localStorage så du behöver inte lägga till `?dev=true` varje gång
+- Om du sätter `DEV_IPS` miljövariabeln markeras dessa IPs automatiskt som dev
 
 ## Exempel på loggar
 
